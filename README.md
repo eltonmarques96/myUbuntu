@@ -9,6 +9,7 @@
     - AdonisJS CLI
     - Expo CLI
   - Yarn
+  - Android Studio
   - Docker and Docker-Compose
   - Insomnia
   - Python 3

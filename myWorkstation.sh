@@ -66,6 +66,9 @@ flatpak install flathub org.gimp.GIMP -y && wget -c https://doc-0s-1g-docs.googl
 ## Install VLC
 sudo snap install vlc --classic &&
 
+## Install Discord
+sudo snap install discord
+
 ## Install Android Studio
 ## Requireds libs
 sudo apt install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
