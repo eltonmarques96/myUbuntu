@@ -42,6 +42,9 @@ sudo npm install -g yarn
 ## Install AdonisJS
 sudo npm i -g @adonisjs/cli
 
+## Install Expo CLI
+npm install -g expo-cli
+
 ## Install Python
 sudo apt install python3 python-pip build-essential libssl-dev -y
 
