@@ -69,6 +69,9 @@ sudo snap install vlc --classic &&
 ## Install Android Studio
 ## Requireds libs
 sudo apt install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
+wget -O ~/Downloads/android-studio.zip https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.0.19/android-studio-ide-201.6858069-linux.tar.gz
+mkdir ~/usr/local/android-studio
+unzip -p ~/Downloads/android-studio.zip > ~/usr/local/android-studio
 
 ## Install Telegram
 sudo snap install telegram-desktop --classic
