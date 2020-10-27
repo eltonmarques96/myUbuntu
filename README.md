@@ -17,6 +17,9 @@
   - Slack
   - VLC
   - Telegram Desktop
+  - Zoom
+  - Htop
+  - Filezilla
   - Terminator
   - ZSH
     - Oh my zsh

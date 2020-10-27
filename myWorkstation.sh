@@ -67,7 +67,10 @@ flatpak install flathub org.gimp.GIMP -y && wget -c https://doc-0s-1g-docs.googl
 sudo snap install vlc --classic &&
 
 ## Install Discord
-sudo snap install discord
+sudo snap install discord --classic &&
+
+## Install Filezilla
+sudo snap install filezilla --beta --classic &&
 
 ## Install Android Studio
 ## Requireds libs
@@ -77,8 +80,13 @@ mkdir ~/usr/local/android-studio
 unzip -p ~/Downloads/android-studio.zip > ~/usr/local/android-studio
 
 ## Install Telegram
-sudo snap install telegram-desktop --classic
+sudo snap install telegram-desktop --classic &&
 
+## Install Zoom
+sudo snap install zoom-client --classic &&
+
+## Install HTop
+sudo snap install htop --classic &&
 
 ## Install Terminator
 sudo add-apt-repository ppa:gnome-terminator -y
