@@ -93,6 +93,9 @@ sudo add-apt-repository ppa:gnome-terminator -y
 sudo apt update
 sudo apt install terminator -y
 
+## Install preload
+sudo apt install preload -y
+
 ## Fonts
 ## Firacode
 mkdir ~./ fonts
@@ -108,7 +111,7 @@ touch ~/.zshrc
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 ## Seting Dracula theme for terminal
-sudo apt-get install dconf-cli
+sudo apt-get install dconf-cli -y
 git clone https://github.com/dracula/gnome-terminal
 cd gnome-terminal
 ./install.sh
