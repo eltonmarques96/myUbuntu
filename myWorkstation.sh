@@ -72,6 +72,9 @@ sudo snap install vlc --classic &&
 ## Install Discord
 sudo snap install discord --classic &&
 
+## Install PSensors
+sudo apt install lm-sensors --classic &&
+
 ## Install Filezilla
 sudo snap install filezilla --beta --classic &&
 
