@@ -15,6 +15,7 @@
   - Python 3
   - Chrome and Brave
   - Slack
+  - PSensors
   - VLC
   - Telegram Desktop
   - Zoom
