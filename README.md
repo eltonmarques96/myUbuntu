@@ -11,6 +11,7 @@
   - Yarn
   - Android Studio
   - Docker and Docker-Compose
+  - Discord
   - Insomnia
   - Python 3
   - Chrome and Brave
