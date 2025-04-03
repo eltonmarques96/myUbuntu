@@ -18,6 +18,9 @@ sudo apt install curl -y
 ## Install Docker and Docker-Compose
 sudo apt install docker docker-compose -y
 
+## Install GDebi to add debians packages
+sudo apt install gdebi -y
+
 ## Install languages
 
 ## Install browsers
@@ -70,7 +73,8 @@ flatpak install flathub org.gimp.GIMP -y && wget -c https://doc-0s-1g-docs.googl
 sudo snap install vlc --classic &&
 
 ## Install Discord
-sudo snap install discord --classic &&
+wget "https://discord.com/api/download?platform=linux&format=deb" -O discord.deb
+sudo gdebi discord.deb* -y
 
 ## Install PSensors
 sudo apt install lm-sensors --classic &&
