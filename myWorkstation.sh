@@ -12,6 +12,9 @@ sudo apt install flatpak gnome-software-plugin-flatpak -y &&
 ## Install git
 sudo apt install git -y
 
+## Install cURL
+sudo apt install curl -y
+
 ## Install Docker and Docker-Compose
 sudo apt install docker docker-compose -y
 
