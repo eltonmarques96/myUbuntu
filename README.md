@@ -1,4 +1,4 @@
-# Shell Script for configuration Ubuntu (actually 20.04)
+# Shell Script for configuration Ubuntu (actually 24.04)
 
 - Programs
   - Spotify
@@ -15,6 +15,7 @@
   - Insomnia
   - Python 3
   - Chrome and Brave
+  - Tweak Tool
   - Slack
   - PSensors
   - VLC
