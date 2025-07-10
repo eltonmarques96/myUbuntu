@@ -12,6 +12,9 @@ sudo apt install flatpak gnome-software-plugin-flatpak -y &&
 ## Install git
 sudo apt install git -y
 
+## Install Chrome Extensions installation on chrome browsers
+sudo apt install chrome-gnome-shell -y
+
 ## Install cURL
 sudo apt install curl -y
 
