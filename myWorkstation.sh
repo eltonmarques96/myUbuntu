@@ -46,13 +46,12 @@ sudo usermod -a -G dialout $USER
 sudo snap connect arduino:raw-usb
 
 ## Install NodeJS
-sudo snap install node --classic --channel=12
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+\. "$HOME/.nvm/nvm.sh"
+nvm install 22 -y
 
 ## Install yarn
 sudo npm install -g yarn
-
-## Install AdonisJS
-sudo npm i -g @adonisjs/cli
 
 ## Install Expo CLI
 npm install -g expo-cli
@@ -72,6 +71,9 @@ sudo snap install slack --classic &&
 ## Install Insomnia
 sudo snap install insomnia --classic &&
 
+## Install Postman
+sudo snap install postman -y &&
+
 ## Install Photogimp
 flatpak install flathub org.gimp.GIMP -y && wget -c https://doc-0s-1g-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/0v83rmt4mij9897co9ufvor2r1jcj1am/1567965600000/07452089978596344616/*/12i-ihCDSZelx30-oNHJaKAzUei1etsbS?e=download && unzip 12i-ihCDSZelx30-oNHJaKAzUei1etsbS?e=download && cd "PHOTOGIMP V2018 - DIOLINUX" && cd "PATCH" && mkdir -p /home/$USER/.var/app/org.gimp.GIMP/config/GIMP/2.10/ && cp -R * /home/$USER/.var/app/org.gimp.GIMP/config/GIMP/2.10/ &&
 
@@ -79,8 +81,7 @@ flatpak install flathub org.gimp.GIMP -y && wget -c https://doc-0s-1g-docs.googl
 sudo snap install vlc --classic &&
 
 ## Install Discord
-wget "https://discord.com/api/download?platform=linux&format=deb" -O discord.deb
-sudo gdebi discord.deb* -y
+sudo snap install discord &&
 
 ## Install PSensors
 sudo apt install lm-sensors --classic &&
