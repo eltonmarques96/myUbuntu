@@ -1,150 +1,127 @@
 #!/bin/bash
 
-## Removing eventually installing locks
-sudo rm /var/lib/dpkg/lock-frontend ; sudo rm /var/cache/apt/archives/lock ;
+set -e
 
-## Updating repo
-sudo apt update && 
+echo "⏳ Removendo locks..."
+sudo rm -f /var/lib/dpkg/lock-frontend
+sudo rm -f /var/cache/apt/archives/lock
 
-## Installing packages and programs from Ubuntu deb repo
-sudo apt install flatpak gnome-software-plugin-flatpak -y &&
+echo "⏳ Atualizando repositórios..."
+sudo apt update -y
 
-## Install git
-sudo apt install git -y
+echo "⏳ Instalando pacotes essenciais..."
+sudo apt install -y \
+    flatpak \
+    gnome-software-plugin-flatpak \
+    git \
+    chrome-gnome-shell \
+    curl \
+    gnome-tweaks \
+    apt-transport-https \
+    gnupg \
+    gdebi \
+    lm-sensors \
+    preload \
+    zsh \
+    dconf-cli \
+    unzip \
+    build-essential
 
-## Install Chrome Extensions installation on chrome browsers
-sudo apt install chrome-gnome-shell -y
+# ---------------------- DOCKER (Método mais atualizado) ----------------------
+echo "🐳 Instalando Docker Engine + Docker Compose Plugin..."
+sudo apt remove -y docker docker.io docker-compose docker-doc
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker.gpg
 
-## Install cURL
-sudo apt install curl -y
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+| sudo tee /etc/apt/sources.list.d/docker.list
 
-## Install Tweaks
-sudo apt install gnome-tweaks
+sudo apt update -y
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo usermod -aG docker $USER
 
-## Install Docker and Docker-Compose
-sudo apt install docker docker-compose -y
+# ---------------------- BROWSERS ----------------------
+mkdir -p ~/Downloads
+cd ~/Downloads
 
-## Install GDebi to add debians packages
-sudo apt install gdebi -y
+echo "🌐 Instalando Google Chrome..."
+wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-## Install languages
+echo "🦁 Instalando Brave Browser..."
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://brave-browser-apt-release.s3.brave.com/brave-core.asc \
+| gpg --dearmor | sudo tee /etc/apt/keyrings/brave-browser.gpg > /dev/null
 
-## Install browsers
-## Chrome
-cd ~/Downloads/ && wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i *.deb && wget -c https://uploads.treeunfe.me/downloads/instalar-freenfe.exe &&
-## Brave
-sudo apt install apt-transport-https curl gnupg
-curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add 
-echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt update && sudo apt install brave-browser
+echo "deb [signed-by=/etc/apt/keyrings/brave-browser.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" \
+| sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 
-## Install Arduino IDE
-sudo apt install snapd
+sudo apt update -y
+sudo apt install -y brave-browser
+
+# ---------------------- ARDUINO ----------------------
+echo "🔌 Instalando Arduino IDE via Snap..."
 sudo snap install arduino
-## Configurating arduino to read USBPort
 sudo usermod -a -G dialout $USER
-sudo snap connect arduino:raw-usb
 
-## Install NodeJS
+# ---------------------- NODEJS via NVM ----------------------
+echo "🟩 Instalando NVM + Node 22 LTS..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-\. "$HOME/.nvm/nvm.sh"
-nvm install 22 -y
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+nvm install 22
+npm install -g yarn
 
-## Install yarn
-sudo npm install -g yarn
+# ---------------------- EXPO CLI ----------------------
+echo "📱 Instalando Expo CLI nova..."
+npm install -g expo
 
-## Install Expo CLI
-npm install -g expo-cli
+# ---------------------- PYTHON ----------------------
+echo "🐍 Instalando Python e libs essenciais..."
+sudo apt install -y python3 python3-pip libssl-dev
 
-## Install Python
-sudo apt install python3 python-pip build-essential libssl-dev -y
+# ---------------------- SNAP APPS ----------------------
+echo "🧩 Instalando apps via Snap..."
+sudo snap install code --classic
+sudo snap install spotify
+sudo snap install slack --classic
+sudo snap install insomnia
+sudo snap install postman
+sudo snap install vlc
+sudo snap install telegram-desktop
+sudo snap install zoom-client
+sudo snap install htop
+sudo snap install filezilla --beta
 
-## Install VSCode
-sudo snap install code --classic &&
+# ---------------------- ANDROID STUDIO ----------------------
+echo "🤖 Instalando Android Studio (versão atual)..."
+wget -O android-studio.tar.gz https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2024.2.1.12/android-studio-2024.2.1.12-linux.tar.gz
+sudo mkdir -p /opt/android-studio
+sudo tar -xzf android-studio.tar.gz -C /opt/android-studio --strip-components=1
+sudo ln -sf /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
 
-## Install Spotify
-sudo snap install spotify --classic &&
+# ---------------------- THEMES & ZSH ----------------------
+echo "💻 Instalando Oh My ZSH + Tema Dracula + Spaceship..."
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
 
-## Install Slack
-sudo snap install slack --classic &&
-
-## Install Insomnia
-sudo snap install insomnia --classic &&
-
-## Install Postman
-sudo snap install postman -y &&
-
-## Install Photogimp
-flatpak install flathub org.gimp.GIMP -y && wget -c https://doc-0s-1g-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/0v83rmt4mij9897co9ufvor2r1jcj1am/1567965600000/07452089978596344616/*/12i-ihCDSZelx30-oNHJaKAzUei1etsbS?e=download && unzip 12i-ihCDSZelx30-oNHJaKAzUei1etsbS?e=download && cd "PHOTOGIMP V2018 - DIOLINUX" && cd "PATCH" && mkdir -p /home/$USER/.var/app/org.gimp.GIMP/config/GIMP/2.10/ && cp -R * /home/$USER/.var/app/org.gimp.GIMP/config/GIMP/2.10/ &&
-
-## Install VLC
-sudo snap install vlc --classic &&
-
-## Install Discord
-sudo snap install discord &&
-
-## Install PSensors
-sudo apt install lm-sensors --classic &&
-
-## Install Filezilla
-sudo snap install filezilla --beta --classic &&
-
-## Install Android Studio
-## Requireds libs
-sudo apt install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
-wget -O ~/Downloads/android-studio.zip https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.0.19/android-studio-ide-201.6858069-linux.tar.gz
-mkdir ~/usr/local/android-studio
-unzip -p ~/Downloads/android-studio.zip > ~/usr/local/android-studio
-
-## Install Telegram
-sudo snap install telegram-desktop --classic &&
-
-## Install Zoom
-sudo snap install zoom-client --classic &&
-
-## Install HTop
-sudo snap install htop --classic &&
-
-## Install Terminator
-sudo add-apt-repository ppa:gnome-terminator -y
-sudo apt update
-sudo apt install terminator -y
-
-## Install preload
-sudo apt install preload -y
-
-## Fonts
-## Firacode
-mkdir ~./ fonts
-wget -O ~/Downloads/firacode.zip https://github.com/tonsky/FiraCode/releases/download/5.2/Fira_Code_v5.2.zip
-unzip -p ~/Downloads/firacode.zip firacode.ttf > ~/Downloads/firacode.ttf
-rm ~/Downloads/firacode.zip
-cp ~/Downloads/firacode.ttf ~/.fonts
-
-## Install ZSH and Ohmyzsh
-sudo apt install zsh -y
-sudo chsh -s /bin/zsh
-touch ~/.zshrc
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-## Seting Dracula theme for terminal
-sudo apt-get install dconf-cli -y
-git clone https://github.com/dracula/gnome-terminal
-cd gnome-terminal
+git clone https://github.com/dracula/gnome-terminal ~/dracula-terminal
+cd ~/dracula-terminal
 ./install.sh
 
-## Adding styles on terminal
-git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt"
+ln -sf "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" \
+       "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 
-## Adding Flathub repo ##
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && 
+# ---------------------- FLATPAK ----------------------
+echo "🛍️ Adicionando Flathub..."
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-
-# ----------------------------- AFTER INSTALL ----------------------------- #
-## Updating and cleaning##
-sudo apt update && sudo apt dist-upgrade -y
-sudo apt autoclean
+# ---------------------- FINALIZAÇÃO ----------------------
+echo "🧼 Limpando sistema..."
+sudo apt update
+sudo apt dist-upgrade -y
 sudo apt autoremove -y
-echo "Installation is done"
-# ---------------------------------------------------------------------- #
+sudo apt autoclean
+
+echo "🎉 INSTALAÇÃO FINALIZADA COM SUCESSO!"
